@@ -4,7 +4,7 @@
 /*
 * class for reading stuff about card and communicate with gui
 * Things going this way. Daemon runs and listens for connection to daemonServer. 
-* If connnection is established, then daemon attach itself to sharedmemory where
+* If connection is established, then daemon attach itself to sharedmemory where
 * it will put data about the clocks. After, it listens for signals. If signal requests
 * clocks data, it place the info in shared mem where gui can read from.
 * Shared mem block is owned and created by gui.
