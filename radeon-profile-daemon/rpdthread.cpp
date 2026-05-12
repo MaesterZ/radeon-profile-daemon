@@ -275,13 +275,13 @@ bool rpdThread::configure(const QString &type, const QString &filePath) {
     if (type == "pm_info") {
         QFileInfo clocksFileInfo(filePath);
         if (!clocksFileInfo.exists()) {
-            // The indicated clocks file path does not exist
-            qCritical() << "Indicated clocks data path does not exist: " << filePath;
-            return false;
+            // On newer kernels (6.x+) amdgpu_pm_info may not be present in debugfs.
+            // Don't abort — ioctl path in the client will be used instead.
+            qWarning() << "Clocks data path does not exist (may be unsupported on this kernel): " << filePath;
+            return true;
         }
 
         if (!clocksFileInfo.isFile()) {
-            // The path is a directory, not a file
             qCritical() << "Indicated clocks data path is not a valid file: " << filePath;
             return false;
         }
@@ -295,7 +295,9 @@ bool rpdThread::configure(const QString &type, const QString &filePath) {
         // Example: /sys/kernel/debug/dri/0/radeon_pm_info -> /tmp/radeon_pm_info
         qDebug() << clocksDataPath << " will be copied into " << destination;
 
-        system(QString("cp " + clocksDataPath + " " + destination).toStdString().c_str());
+        QFile::remove(destination);
+        if (!QFile::copy(clocksDataPath, destination))
+            qWarning() << "Failed to copy " << clocksDataPath << " to " << destination;
 
     } else if (type == "pwm1_enable") {
         qDebug() << "Fan control mode file: " << filePath;
@@ -307,6 +309,11 @@ bool rpdThread::configure(const QString &type, const QString &filePath) {
 }
 
 void rpdThread::readData() {
+    if (clocksDataPath.isEmpty()) {
+        qDebug() << "No clocks data path configured, skipping read";
+        return;
+    }
+
     if (!sharedMem.isAttached() && !sharedMem.attach()) {
         qWarning() << "Shared memory is not attached, can't write data: " << sharedMem.errorString();
         return;

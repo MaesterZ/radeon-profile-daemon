@@ -1,9 +1,0 @@
-[Unit]
-Description=radeon-profile daemon
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/radeon-profile-daemon
-
-[Install]
-WantedBy=multi-user.target

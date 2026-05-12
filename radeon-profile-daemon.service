@@ -1,0 +1,25 @@
+[Unit]
+Description=AMD Radeon Profile daemon
+After=local-fs.target systemd-udevd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/radeon-profile-daemon
+Restart=on-failure
+RestartSec=5
+
+# Give the daemon a private /tmp — So debugfs copies do not pollute the global /tmp namespace
+PrivateTmp=true
+
+# Security hardening — Compatible with the application need to write to /sys/class/drm/ for fan control and power settings
+ProtectHome=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+NoNewPrivileges=true
+RestrictRealtime=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target
