@@ -1,6 +1,6 @@
-# Changelog
+# [2026-05-12]
 
-## Linux 6.18 LTS compatibility fixes (2026-05-12)
+## Linux 6.18 LTS compatibility fixes
 
 ### `radeon-profile-daemon/rpdthread.cpp` — Replace `system("cp ...")` with `QFile::copy()`
 
@@ -26,7 +26,7 @@ file was not configured because it doesn't exist on this kernel). Eliminates the
 repeated `Shared memory is not attached, can't write data` warnings that appeared
 whenever the daemon timer fired before a valid path was established.
 
-## Build system cleanup (2026-05-12)
+## Build system cleanup
 
 ### `radeon-profile-daemon.pro` — Fix broken service file install path (bug fix)
 
