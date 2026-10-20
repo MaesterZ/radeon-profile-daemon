@@ -12,9 +12,8 @@
 
 # Qt-es
 
-/.qmake.cache
-/.qmake.stash
-radeon-profile-daemon/.qmake.stash
+.qmake.cache
+.qmake.stash
 *.pro.user
 *.pro.user.*
 *.qbs.user
@@ -37,3 +36,4 @@ Makefile*
 
 # Binary
 radeon-profile-daemon/radeon-profile-daemon
+target/
