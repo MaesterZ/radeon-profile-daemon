@@ -7,15 +7,25 @@ Supports opensource `xf86-video-ati` and `xf86-video-amdgpu` drivers.
 
 **[2026-05] Forked to fix issues with latest GPUs and LTS kernel.**
 
+# Dependencies
+
+* Qt 6 (qt6-base) (On Debian/Ubuntu: `qt6-base-dev qmake6`)
+
 # Build
 
 ```bash
+./build.sh
+```
+
+Or manually:
+
+```bash
 cd radeon-profile-daemon/
-qmake
+qmake6
 make
 ```
 
-The resulting binary is `./target/radeon-profile-daemone`.
+The resulting binary is `./radeon-profile-daemon/target/radeon-profile-daemon`.
 
 # Installation
 
