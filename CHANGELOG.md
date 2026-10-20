@@ -13,6 +13,10 @@ there and reads the debugfs clocks copy from it. With it, the daemon could never
 shared memory (`QSharedMemory::handle:: UNIX key file doesn't exist`), so clocks read through
 the daemon were missing.
 
+### Version
+
+Version bumped to `20261020`.
+
 # [2026-05-12]
 
 ## Linux 6.18 LTS compatibility fixes
