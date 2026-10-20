@@ -1,3 +1,22 @@
+# [2026-10-20]
+
+## Port to Qt 6
+
+Qt 5 is end of life. The daemon now builds with Qt 6 (`qmake6`, C++17); no source change was
+needed. Shared memory keys are compatible: a Qt 6 GUI creates the same System V segment and
+`/tmp/qipc_sharedmemory_*` key file as a Qt 5 one.
+
+### `radeon-profile-daemon.service` — Remove `PrivateTmp`
+
+`PrivateTmp=true` gave the daemon its own `/tmp`, but the GUI creates the shared memory key file
+there and reads the debugfs clocks copy from it. With it, the daemon could never attach to the
+shared memory (`QSharedMemory::handle:: UNIX key file doesn't exist`), so clocks read through
+the daemon were missing.
+
+### Version
+
+Version bumped to `20261020`.
+
 # [2026-05-12]
 
 ## Linux 6.18 LTS compatibility fixes
