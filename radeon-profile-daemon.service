@@ -8,8 +8,8 @@ ExecStart=/usr/local/bin/radeon-profile-daemon
 Restart=on-failure
 RestartSec=5
 
-# Give the daemon a private /tmp — So debugfs copies do not pollute the global /tmp namespace
-PrivateTmp=true
+# No PrivateTmp: the daemon must share /tmp with the GUI, which creates the shared memory key file
+# (/tmp/qipc_sharedmemory_*) there and reads the debugfs clocks copy (/tmp/*_pm_info) from it
 
 # Security hardening — Compatible with the application need to write to /sys/class/drm/ for fan control and power settings
 ProtectHome=true
